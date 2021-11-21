@@ -1,0 +1,10 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 23px);
+    grid-template-rows: repeat(10, 23px);
+}
+
+.boards {
+    display: grid;
+    grid-template-columns: repeat(2, 350px);
+}
