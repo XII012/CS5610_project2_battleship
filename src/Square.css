@@ -1,18 +1,23 @@
 #square {
-    color: purple;
+    color: red;
+    border: 1px solid black;
 
     height: 20px;
     width: 20px;
 }
 
-.purpleBorder {
-    border: 1px solid purple;
+#square:hover {
+    background-color: aquamarine;
 }
 
-.blueBorder {
-    border: 1px solid blue;
+.aqua {
+    background-color: aqua;
 }
 
-.blackBorder {
-    border: 1px solid black;
+.white {
+    background-color: white;
+}
+
+.coral {
+    background-color:coral;
 }

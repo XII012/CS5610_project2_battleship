@@ -1,22 +1,45 @@
-import React, { useContext, useEffect, useState } from 'react';
 import { Square } from "./Square"
 import './Board.css'
 import { useSelector } from 'react-redux';
 import ResetButton from './ResetButton';
-import ResetGameBoardOnly from './ResetGameBoardOnlyFunction'
+// import StartGame from './StartGameButton'
 import { useParams } from 'react-router';
 
-function CreateBoardComponent(boardState, board) {
+function createBoardComponent(boardState,validClick) {
     let boardComponent = [];
+    let playing;
+    if (validClick % 2 === 0) {
+        playing = "board1";
+    } else {
+        playing = "board2";
+    }
 
     for (let i = 0; i < boardState.length; i++) {
         let row = boardState[i];
         for (let j = 0; j < row.length; j++) {
-            boardComponent.push((<Square symbol={boardState[i][j]} x={i} y={j} board = {board} />))
+            let square = boardState[i][j];
+            boardComponent.push(
+                (<Square hit={square.hit} ship ={square.ship} x={i} y={j}
+                     board={square.board} playing = {playing}/>))
         }
     }
 
     return boardComponent;
+}
+
+function calculateScore(boardState) {
+    let score = 0;
+    for (let i = 0; i < boardState.length; i++) {
+        let row = boardState[i];
+        for (let j = 0; j < row.length; j++) {
+            let square = boardState[i][j];
+            if (square.ship && square.hit) {
+                score += 1;
+            }
+        }
+    }
+
+    return score;
 }
 
 export default function Board() {
@@ -26,16 +49,28 @@ export default function Board() {
     const board1State = useSelector((state) => state.board1)
     const board2State = useSelector((state) => state.board2)
 
-    // useEffect(() => dispatch({type: "CREATE_GAME_BOARD", gameType}), [])
-
-    const boardComponent1 = CreateBoardComponent(board1State, "board1");
-    const boardComponent2 = CreateBoardComponent(board2State, "board2");
+    const boardComponent1 = createBoardComponent(board1State, clickCount);
+    const boardComponent2 = createBoardComponent(board2State, clickCount);
 
 
+    let winner;
+    let score1 = calculateScore(board1State);
+    let score2 = calculateScore(board2State);
     
+
+    if (score2 >= 17) {
+        winner = "Player"
+    }
+    if (score1 >= 17) {
+        winner = "AI"
+    }
+
+
     return (
         <div>
-            <h3>{"This is an " + gameType + " game " + clickCount}</h3>
+            <h3>{"This is an " + gameType + " game. " + clickCount}</h3>
+            <ResetButton text="Reset"/>
+            <div>{(winner) ? "Game over! " + winner + " Won!" :""}</div>
             <div class="boards">
                 <div>
                     <h3>Player 1</h3>
@@ -50,8 +85,7 @@ export default function Board() {
                     </div>
                 </div>
             </div>
-            <ResetButton text="Reset, pls"/>
-            <ResetGameBoardOnly text="Game board only, pls" />
+            {/* <StartGame text="StartGame" /> */}
         </div>
     )
 }

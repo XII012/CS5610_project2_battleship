@@ -6,15 +6,26 @@ import './Square.css';
 
 export function Square(props) {
 
-    const symbol = props.symbol;
-    let borderColor = 'purpleBorder';
-    if (symbol === '0') {
-        borderColor = 'blueBorder';
-    } else if (symbol === '') {
-        borderColor = 'blackBorder';
-    }
+    const hit = props.hit;
+    const ship = props.ship;
+    let color = 'white';
+    let content = '';
 
     const dispatch = useDispatch();
+
+    if (ship) {
+        content = "O";
+    }
+
+    if (hit && !ship) {
+        color = "aqua";
+    } else if(hit && ship) {
+        color = "coral";
+        content = "X";
+    } else {
+        color = "white";
+    }
+
 
     return (<div onClick={() => {
         dispatch({
@@ -22,10 +33,12 @@ export function Square(props) {
             x: props.x,
             y: props.y,
             board: props.board,
+            playing: props.playing,
+            hit: hit,
         })
     }
-    } id="square" class={borderColor}>
-        {symbol}
+    } id="square" class={color}>
+        {content}
     </div>);
 }
 

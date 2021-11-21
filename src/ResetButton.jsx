@@ -13,7 +13,6 @@ export default function ResetButton(props) {
                 type: "RESET",
             })
 
-
         }>
             {text}
         </button>
