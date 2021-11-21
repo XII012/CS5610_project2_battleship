@@ -26,20 +26,29 @@ export function Square(props) {
         color = "white";
     }
 
-
-    return (<div onClick={() => {
-        dispatch({
-            type: 'boardClick',
-            x: props.x,
-            y: props.y,
-            board: props.board,
-            playing: props.playing,
-            hit: hit,
-        })
+    if (props.board === "board2") {
+        content = "";
     }
-    } id="square" class={color}>
-        {content}
-    </div>);
+
+
+    if (props.winning) {
+        return (<div id="square" class={color}> {content}</div>);
+    } else {
+        return (<div onClick={() => {
+            dispatch({
+                type: 'boardClick',
+                x: props.x,
+                y: props.y,
+                board: props.board,
+                playing: props.playing,
+                hit: hit,
+            })
+        }
+        } id="square" class={color}>
+            {content}
+        </div>);
+
+    }
 }
 
    // if (state === 'X') {

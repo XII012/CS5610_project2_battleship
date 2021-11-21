@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import reducers from './reducers/reducers';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import WelcomePage from './WelcomePage';
+import LandingPage from './LandingPage'
 import Rules from './Rules';
 
 
@@ -25,6 +26,7 @@ ReactDOM.render(
         <Route path="/" element={<WelcomePage />} />
         <Route path="/rules" element={<Rules />} />
         <Route path="/gameBoard/:gameType" element={<Board />} />
+        <Route path="/gameBoard" element={<LandingPage />} />
       </Routes>
     </Router>
   </Provider>,

@@ -4,15 +4,10 @@ import { useSelector } from 'react-redux';
 import ResetButton from './ResetButton';
 // import StartGame from './StartGameButton'
 import { useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
 
-function createBoardComponent(boardState,validClick) {
+function createBoardComponent(boardState,playing, winning) {
     let boardComponent = [];
-    let playing;
-    if (validClick % 2 === 0) {
-        playing = "board1";
-    } else {
-        playing = "board2";
-    }
 
     for (let i = 0; i < boardState.length; i++) {
         let row = boardState[i];
@@ -20,7 +15,7 @@ function createBoardComponent(boardState,validClick) {
             let square = boardState[i][j];
             boardComponent.push(
                 (<Square hit={square.hit} ship ={square.ship} x={i} y={j}
-                     board={square.board} playing = {playing}/>))
+                     board={square.board} playing = {playing} winning = {winning}/>))
         }
     }
 
@@ -49,37 +44,70 @@ export default function Board() {
     const board1State = useSelector((state) => state.board1)
     const board2State = useSelector((state) => state.board2)
 
-    const boardComponent1 = createBoardComponent(board1State, clickCount);
-    const boardComponent2 = createBoardComponent(board2State, clickCount);
+    // Confrim who's turn
+    let playing;
+    if (clickCount % 2 === 0) {
+        playing = "board1";
+    } else {
+        playing = "board2";
+    }
 
-
+    // Confirm the winner
     let winner;
+    let winning=false;
     let score1 = calculateScore(board1State);
     let score2 = calculateScore(board2State);
+
+    if (gameType !== "free-play") {
+        if (score2 >= 17) {
+            winner = "Player";
+            winning = true;
+        }
+        if (score1 >= 17) {
+            winner = "AI";
+            winning = true;
+        }}
+
+    const boardComponent1 = createBoardComponent(board1State, playing, winning);
+    const boardComponent2 = createBoardComponent(board2State, playing, winning);
+
+    // AI part
+    const dispatch = useDispatch();
+    if (playing === "board2") {
+        let completeClick = false;
+        while (!completeClick) {
+            let randomNum1 = Math.floor(Math.random() * board1State.length);
+            let randomNum2 = Math.floor(Math.random() * board1State[randomNum1].length);
+            if (!board1State[randomNum1][randomNum2].hit) {
+                dispatch({
+                    type: 'boardClick',
+                    x: randomNum1,
+                    y: randomNum2,
+                    board: board1State[randomNum1][randomNum2].board,
+                    playing: playing,
+                    hit: board1State[randomNum1][randomNum2].hit,
+                })
+                completeClick = true
+            }
+
+        }
+    }
     
-
-    if (score2 >= 17) {
-        winner = "Player"
-    }
-    if (score1 >= 17) {
-        winner = "AI"
-    }
-
 
     return (
         <div>
             <h3>{"This is an " + gameType + " game. " + clickCount}</h3>
             <ResetButton text="Reset"/>
-            <div>{(winner) ? "Game over! " + winner + " Won!" :""}</div>
+            <h2>{(winner) ? "Game over! " + winner + " Won!" :""}</h2>
             <div class="boards">
-                <div>
-                    <h3>Player 1</h3>
-                    <div class="board">
+                <div class={(gameType === "free-play")? "hidden" : "not-hidden"}>
+                    <h3>Player</h3>
+                    <div class="board" >
                         {boardComponent1}
                     </div>
                 </div>
                 <div>
-                    <h3>Player 2</h3>
+                    <h3>AI</h3>
                     <div class="board">
                         {boardComponent2}
                     </div>

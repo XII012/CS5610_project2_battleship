@@ -8,3 +8,7 @@
     display: grid;
     grid-template-columns: repeat(2, 350px);
 }
+
+.hidden {
+    visibility: hidden;
+}
