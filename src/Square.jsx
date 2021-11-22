@@ -30,9 +30,9 @@ export function Square(props) {
         content = <BsFillRecordFill />;
     }
 
-    if (ship) {
-        content = <BsFillRecordFill />;
-    }
+    // if (ship) {
+    //     content = <BsFillRecordFill />;
+    // }
 
 
 
