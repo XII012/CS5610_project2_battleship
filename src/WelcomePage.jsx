@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from "react-bootstrap/Button";
 
 export default function WelcomePage() {
 
     return (<div class="WelcomePage">
-        <h1>
-        Welcome to Battleship Game!
-        </h1>
-        <div><Link to={"/gameBoard"}>Play Battleship Game</Link></div>
+        <div class="oneButton">
+            <br />
+            <Button href="/gameBoard" variant="outline-primary">Play Battleship Game</Button>
+        </div>
     </div>)
 
 }

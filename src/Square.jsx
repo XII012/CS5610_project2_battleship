@@ -3,36 +3,58 @@ import React, { useContext, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
 import './Square.css';
 
+import { BsXLg } from "react-icons/bs";
+import { BsCheckLg } from "react-icons/bs";
+import { BsFillRecordFill } from "react-icons/bs";
+
+
+
+function classNames(classes) {
+    return Object.entries(classes)
+      .filter(([key, value]) => value)
+      .map(([key, value]) => key)
+      .join(' ');
+  }
 
 export function Square(props) {
 
     const hit = props.hit;
     const ship = props.ship;
-    let color = 'white';
+    // let color = 'white';
     let content = '';
+    // let borderColor = 'borderColorBlack';
 
     const dispatch = useDispatch();
 
+    if (ship && props.board === "board1") {
+        content = <BsFillRecordFill />;
+    }
+
     if (ship) {
-        content = "O";
+        content = <BsFillRecordFill />;
     }
 
+
+
+    if(hit && ship) {
+        content = <BsXLg />;
+    }
     if (hit && !ship) {
-        color = "aqua";
-    } else if(hit && ship) {
-        color = "coral";
-        content = "X";
-    } else {
-        color = "white";
+        content = <BsCheckLg />
     }
 
-    if (props.board === "board2") {
-        content = "";
-    }
+    let liClasses = classNames({
+        'backgroundAqua': hit && !ship,
+        'backgroundCoral': hit && ship,
+        'backgroundWhite': !hit,
+        'contentRed': hit && ship,
+        'contentBlack': !hit,
+      });
+      
 
 
     if (props.winning) {
-        return (<div id="square" class={color}> {content}</div>);
+        return (<div id="square" class={liClasses}> {content}</div>);
     } else {
         return (<div onClick={() => {
             dispatch({
@@ -44,24 +66,9 @@ export function Square(props) {
                 hit: hit,
             })
         }
-        } id="square" class={color}>
+        } id="square" class={liClasses}>
             {content}
         </div>);
 
     }
 }
-
-   // if (state === 'X') {
-    //     setState('0');
-    // } else if (state === '0') {
-    //     setState('');
-    // } else {
-    //     setState('X')
-    // }
-
-// export function SmallerSquare(props) {
-//     const [countState, setCountState] = useState(0)
-//     return (<div onClick={() => setCountState(100 + countState)}>
-//         Click Count: {countState}
-//         </div>)
-// }

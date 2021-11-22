@@ -92,13 +92,14 @@ export default function Board() {
 
         }
     }
-    
 
     return (
         <div>
-            <h3>{"This is an " + gameType + " game. " + clickCount}</h3>
-            <ResetButton text="Reset"/>
-            <h2>{(winner) ? "Game over! " + winner + " Won!" :""}</h2>
+            <h2>{gameType + " battle game "}</h2>
+            <div class="oneButton">
+                <ResetButton text="Reset"/>
+            </div>
+            <h1>{(winner) ? "Game over! " + winner + " Won!" :""}</h1>
             <div class="boards">
                 <div class={(gameType === "free-play")? "hidden" : "not-hidden"}>
                     <h3>Player</h3>
@@ -113,7 +114,6 @@ export default function Board() {
                     </div>
                 </div>
             </div>
-            {/* <StartGame text="StartGame" /> */}
         </div>
     )
 }

@@ -12,7 +12,26 @@ code {
     monospace;
 }
 
-.header {
+
+h1 {
+  text-align: center;
+  color:deepskyblue;
+}
+
+h2 {
+  color:rgb(123, 176, 255);
+}
+
+.oneButton {
   display: grid;
-  grid-template-columns: repeat(2, 100px);
+  width: 100%;
+  height: 50px;
+  justify-content: center;
+}
+
+.twoButtons {
+  display: grid;
+  width: 100%;
+  height: 50px;
+  justify-content: center;
 }

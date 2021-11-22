@@ -1,14 +1,35 @@
 .board {
     display: grid;
-    grid-template-columns: repeat(10, 23px);
-    grid-template-rows: repeat(10, 23px);
+    grid-template-columns: repeat(10, 21px);
+    grid-template-rows: repeat(10, 21px);
+    justify-content: center;
+
 }
 
 .boards {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 350px);
+    justify-content: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .boards {
+        /* height: 500px; */
+        grid-template-rows: repeat(2, 250px);
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+  
+
+h2 {
+    text-align: center;
+    align-content: space-around;
+
 }
 
 .hidden {
-    visibility: hidden;
+    /* visibility: hidden; */
+    display: none;
 }

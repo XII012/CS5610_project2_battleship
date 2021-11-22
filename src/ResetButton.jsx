@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import Button from "react-bootstrap/Button";
+
 
 
 export default function ResetButton(props) {
@@ -8,13 +10,21 @@ export default function ResetButton(props) {
     const dispatch = useDispatch();
 
     return (
-        <button onClick={
-            () => dispatch({
-                type: "RESET",
-            })
+            <Button variant="outline-primary" onClick={
+                () => dispatch({
+                    type: "RESET",
+                })
+    
+            }>
+                {text}
+            </Button>
+        // <button onClick={
+        //     () => dispatch({
+        //         type: "RESET",
+        //     })
 
-        }>
-            {text}
-        </button>
+        // }>
+        //     {text}
+        // </button>
     )
 }
