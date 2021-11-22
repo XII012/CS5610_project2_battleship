@@ -5,6 +5,9 @@ import ResetButton from './ResetButton';
 // import StartGame from './StartGameButton'
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
+import { LocalStorageContext } from './LocalStorageProvider';
+import React, { useContext, useEffect, useState } from 'react';
+
 
 function createBoardComponent(boardState,playing, winning) {
     let boardComponent = [];
@@ -92,6 +95,23 @@ export default function Board() {
 
         }
     }
+
+    // Bonus Point 1: Local Storage 
+    // Dispatch part
+    const [localStorageState, localStorageDispatch] = useContext(LocalStorageContext);
+    if (!winning) {
+        localStorageDispatch({
+            type: "UPDATE",
+            clickCount: clickCount,
+            playing: playing,
+        })
+    } else {
+        localStorageDispatch({
+            type:"RESET",
+        })
+    }
+    console.log(localStorageState['clickCount']);
+
 
     return (
         <div>
