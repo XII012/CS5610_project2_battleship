@@ -2,10 +2,12 @@
 import React, { useContext, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
 import './Square.css';
-
 import { BsXLg } from "react-icons/bs";
 import { BsCheckLg } from "react-icons/bs";
 import { BsFillRecordFill } from "react-icons/bs";
+import { useDrop } from 'react-dnd';
+import { ItemTypes } from './Constants';
+
 
 
 
@@ -34,8 +36,6 @@ export function Square(props) {
     //     content = <BsFillRecordFill />;
     // }
 
-
-
     if(hit && ship) {
         content = <BsXLg />;
     }
@@ -43,18 +43,36 @@ export function Square(props) {
         content = <BsCheckLg />
     }
 
+    const [{ isOver }, drop] = useDrop({
+        accept: ItemTypes.SHIP,
+        drop: (item) => dispatch({
+            type: 'SELECT_SHIP',
+            x: props.x,
+            y: props.y,
+            board: props.board,
+            shipNum: item.num,
+            shipId: item.id,
+        }),
+        collect: monitor => ({
+            isOver: !!monitor.isOver(),
+        })
+    })
+    
+
+
     let liClasses = classNames({
         'backgroundAqua': hit && !ship,
         'backgroundCoral': hit && ship,
         'backgroundWhite': !hit,
         'contentRed': hit && ship,
         'contentBlack': !hit,
+        'backgroundgreen': isOver,
+        'square': true
       });
-      
 
 
     if (props.winning) {
-        return (<div id="square" class={liClasses}> {content}</div>);
+        return (<div class={liClasses}> {content}</div>);
     } else {
         return (<div onClick={() => {
             dispatch({
@@ -66,7 +84,9 @@ export function Square(props) {
                 hit: hit,
             })
         }
-        } id="square" class={liClasses}>
+        } 
+        ref={drop} 
+        class={liClasses}>
             {content}
         </div>);
 

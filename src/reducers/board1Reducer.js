@@ -9,14 +9,12 @@ const defaultBoard = [[false, false, false, false, false, false, false, false, f
 [false, false, false, false, false, false, false, false, false, false],
 [false, false, false, false, false, false, false, false, false, false],]
 
-// const square = ["board1", null, false]
-
 function generateGameBoard() {
     for (let i=0;i<defaultBoard.length;i++) {
         for (let j=0;j<defaultBoard.length;j++) {
             defaultBoard[i][j] = {
                 board: "board1",
-                ship: null,
+                ship: false,
                 hit: false,
             };
         }
@@ -91,18 +89,74 @@ export default function board1Reducer(state, action) {
 
     
     if (state === undefined) {
-        return startRandomGame(generateGameBoard());
+        return generateGameBoard();
 
     }
 
-    // if (action.type === 'START_RANDOM') {
-    //     let ships =[2, 3, 3, 4, 5,];
-    //     for (let i=0;i<ships.length;i++) {
-    //         let generateSucc = false;
-    //         while(!generateSucc) {
-    //             generateSucc = generateRandomShip(state, ships[i], i);
+    if (action.type === 'START_RANDOM') {
+        startRandomGame(state);
+        return [...state];
+    }
+
+
+    if (action.type === 'SELECT_SHIP' && action.board === "board1") {
+        
+        let checkRepeat = false;
+        let max = action.y+action.shipNum-1;        
+
+        if (max <= 9) {
+            for (let i=0;i<action.shipNum;i++){
+                if (state[action.x][action.y+i].ship) {
+                    checkRepeat = true;
+                }
+            }
+
+            if (!checkRepeat) {
+                for (let i=0;i<action.shipNum;i++){
+                    state[action.x][action.y+i].ship = action.shipId;
+                }
+            }
+        }
+        // if (max <= 9) {
+        //     for (let i=0;i<action.shipNum;i++) {
+        //         if (state[action.x][action.y+i].ship) {
+        //             checkRepeat = true;
+        //         }
+        //     }
+
+        //     if (!checkRepeat){
+        //         for (let i=0;i<action.shipNum;i++){
+        //             state[action.x][action.y+i].ship = action.shipId;
+        //             }
+        //     }
+        // } else {
+        //     return [...state];
+        // }
+
+
+
+        return [...state];
+    }
+
+    // if (action.type === 'SELECT_SHIP' && action.board === "board1") {
+    //     let ship = action.ship;//[[x,y],[x,y]]
+    //     let legal=true;
+    //     for (let square in ship) {
+    //         if (0 <= square[0] <= 9 && 0 <= square[1] <= 9) {
+    //             if (state[square[0]][square[1]]) {
+    //                 legal = false;
+    //             }
+    //         } else {
+    //             legal = false;
     //         }
     //     }
+
+    //     if (legal) {
+    //         for (let square in ship) {
+    //             state[square[0]][square[1]] = true;
+    //         }
+    //     }
+
     //     return [...state];
     // }
 

@@ -1,4 +1,4 @@
-#square {
+.square {
     border: 1px solid black;
     /* color:rgb(173, 255, 47); */
 
@@ -30,4 +30,8 @@
 
 .backgroundCoral {
     background-color:coral;
+}
+
+.backgroundgreen {
+    border: 3px solid green;
 }

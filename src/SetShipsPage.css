@@ -1,0 +1,15 @@
+.ships{
+    display: grid;
+    grid-template-rows: repeat(5,21px);
+
+}
+
+.ship {
+    display: grid;
+    grid-template-columns: repeat(5,21px);
+}
+
+#hidden{
+    /* visibility: hidden; */
+    display: none;
+}

@@ -12,6 +12,10 @@ import Rules from './Rules';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar ,Container} from 'react-bootstrap';
 import { LocalStorageProvider } from './LocalStorageProvider'
+import SetShipsPage from './SetShipsPage';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import PlayPage from './PlayPage';
 
 
 // import { persistStore, persistReducer } from 'redux-persist'
@@ -30,12 +34,12 @@ const store = createStore(reducers);
 
 // let store = createStore(persistedReducer)
 // let persistor = persistStore(store)
-
+<DndProvider backend={HTML5Backend}>...</DndProvider>
 
 ReactDOM.render(
   <LocalStorageProvider>
     <Provider store={store} >
-      {/* <PersistGate loading={null} persistor={persistor}> */}
+      <DndProvider backend={HTML5Backend}>
         <Navbar bg="primary" variant="dark" sticky="top">
           <Container>
             <Navbar.Brand href="/">Kaiwen's Battleship</Navbar.Brand>
@@ -50,11 +54,12 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             <Route path="/rules" element={<Rules />} />
-            <Route path="/gameBoard/:gameType" element={<Board />} />
             <Route path="/gameBoard" element={<LandingPage />} />
+            <Route path="/setShips" element={<SetShipsPage />} />
+            <Route path="/gameBoard/:gameType" element={<PlayPage />} />
           </Routes>
         </Router>
-      {/* </PersistGate> */}
+      </DndProvider>
     </Provider>
   </LocalStorageProvider>,
   document.getElementById('root')
