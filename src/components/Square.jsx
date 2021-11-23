@@ -1,12 +1,11 @@
-// import SmallerSquare from "./SmallerSquare";
 import React, { useContext, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
-import './Square.css';
+import '../styles/Square.css';
 import { BsXLg } from "react-icons/bs";
 import { BsCheckLg } from "react-icons/bs";
 import { BsFillRecordFill } from "react-icons/bs";
 import { useDrop } from 'react-dnd';
-import { ItemTypes } from './Constants';
+import { ItemTypes } from '../Constants';
 
 
 
@@ -22,24 +21,24 @@ export function Square(props) {
 
     const hit = props.hit;
     const ship = props.ship;
-    // let color = 'white';
     let content = '';
-    // let borderColor = 'borderColorBlack';
+
 
     const dispatch = useDispatch();
 
-    if (ship && props.board === "board1") {
+    if ((ship!==undefined) && props.board === "board1") {
         content = <BsFillRecordFill />;
     }
 
-    // if (ship) {
+    // Cheat: Show the ships of the board2
+    // if ((ship!==undefined)) {
     //     content = <BsFillRecordFill />;
     // }
 
-    if(hit && ship) {
+    if(hit && (ship!==undefined)) {
         content = <BsXLg />;
     }
-    if (hit && !ship) {
+    if (hit && (ship === undefined)) {
         content = <BsCheckLg />
     }
 
@@ -61,10 +60,10 @@ export function Square(props) {
 
 
     let liClasses = classNames({
-        'backgroundAqua': hit && !ship,
-        'backgroundCoral': hit && ship,
+        'backgroundAqua': hit && (ship === undefined),
+        'backgroundCoral': hit && (ship!==undefined),
         'backgroundWhite': !hit,
-        'contentRed': hit && ship,
+        'contentRed': hit && (ship!==undefined),
         'contentBlack': !hit,
         'backgroundgreen': isOver,
         'square': true

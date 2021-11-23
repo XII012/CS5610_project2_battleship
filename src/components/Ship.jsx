@@ -1,21 +1,7 @@
 import { Square } from "./Square";
-import Board from "./Board";
 import { useDrag } from 'react-dnd'
-import { useDispatch } from "react-redux";
-import { ItemTypes } from "./Constants";
-import { useSelector } from "react-redux";
+import { ItemTypes } from "../Constants";
 
-
-// function DraggableShip(props) {
-  
-//   return collected.isDragging ? (
-//     <div ref={dragPreview} />
-//   ) : (
-//     <div ref={drag} {...collected}>
-//       ...
-//     </div>
-//   )
-// }
 
 export default function Ship(props) {
     const [{isDragging}, drag] = useDrag(() => ({
@@ -28,23 +14,6 @@ export default function Ship(props) {
             isDragging: !!monitor.isDragging(),
           }),
     }))
-
-    // const dispatch = useDispatch();
-    // let shipNum = useSelector((state)=>state.shipNum);
-
-    // if (shipNum && isDragging) {
-    //     dispatch({
-    //         type: 'SHIP_DRAGGED',
-    //         shipNum: props.num,
-    //         id: props.id,
-    //     })
-    // } 
-    
-    // if (!shipNum && !isDragging){
-    //     dispatch({
-    //         type: 'SHIP_NOT_DRAGGED',
-    //     })
-    // }
 
     const ship =[];
     for (let i=0;i<props.shipNum;i++) {

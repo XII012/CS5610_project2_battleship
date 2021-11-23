@@ -18,13 +18,5 @@ export default function ResetButton(props) {
             }>
                 {text}
             </Button>
-        // <button onClick={
-        //     () => dispatch({
-        //         type: "RESET",
-        //     })
-
-        // }>
-        //     {text}
-        // </button>
     )
 }

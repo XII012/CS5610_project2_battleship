@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Board from './Board'
+import './styles/index.css';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers/reducers';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import WelcomePage from './WelcomePage';
 import LandingPage from './LandingPage'
-import Rules from './Rules';
+import RulesPage from './RulesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar ,Container} from 'react-bootstrap';
 import { LocalStorageProvider } from './LocalStorageProvider'
@@ -53,9 +52,9 @@ ReactDOM.render(
         <Router>
           <Routes>
             <Route path="/" element={<WelcomePage />} />
-            <Route path="/rules" element={<Rules />} />
+            <Route path="/rules" element={<RulesPage />} />
             <Route path="/gameBoard" element={<LandingPage />} />
-            <Route path="/setShips" element={<SetShipsPage />} />
+            {/* <Route path="/setShips" element={<SetShipsPage />} /> */}
             <Route path="/gameBoard/:gameType" element={<PlayPage />} />
           </Routes>
         </Router>

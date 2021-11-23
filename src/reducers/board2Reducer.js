@@ -14,7 +14,7 @@ function generateGameBoard() {
         for (let j=0;j<defaultBoard.length;j++) {
             defaultBoard[i][j] = {
                 board: "board2",
-                ship: null,
+                ship: undefined,
                 hit: false,
             };
         }
@@ -43,7 +43,7 @@ function generateRandomShip(state, num, id) {
     
         if (!checkRepeat) {
             for (let i=0;i<num;i++) {
-                state[x+i][y].ship = "ship"+ id;
+                state[x+i][y].ship = id;
             }
             return true;
         }
@@ -63,7 +63,7 @@ function generateRandomShip(state, num, id) {
     
         if (!checkRepeat) {
             for (let i=0;i<num;i++) {
-                state[x][y+i].ship = "ship"+ id;
+                state[x][y+i].ship = id;
             }
             return true;
         }

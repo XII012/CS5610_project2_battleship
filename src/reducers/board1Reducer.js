@@ -14,7 +14,7 @@ function generateGameBoard() {
         for (let j=0;j<defaultBoard.length;j++) {
             defaultBoard[i][j] = {
                 board: "board1",
-                ship: false,
+                ship: undefined,
                 hit: false,
             };
         }
@@ -43,7 +43,7 @@ function generateRandomShip(state, num, id) {
     
         if (!checkRepeat) {
             for (let i=0;i<num;i++) {
-                state[x+i][y].ship = "ship"+ id;
+                state[x+i][y].ship = id;
             }
             return true;
         }
@@ -63,7 +63,7 @@ function generateRandomShip(state, num, id) {
     
         if (!checkRepeat) {
             for (let i=0;i<num;i++) {
-                state[x][y+i].ship = "ship"+ id;
+                state[x][y+i].ship = id;
             }
             return true;
         }
@@ -102,11 +102,11 @@ export default function board1Reducer(state, action) {
     if (action.type === 'SELECT_SHIP' && action.board === "board1") {
         
         let checkRepeat = false;
-        let max = action.y+action.shipNum-1;        
+        let max = action.y+action.shipNum;        
 
-        if (max <= 9) {
+        if (max <= 10) {
             for (let i=0;i<action.shipNum;i++){
-                if (state[action.x][action.y+i].ship) {
+                if (state[action.x][action.y+i].ship !== undefined) {
                     checkRepeat = true;
                 }
             }
